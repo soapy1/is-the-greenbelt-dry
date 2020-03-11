@@ -73,6 +73,7 @@ def extract_data_points(current_date_data, last_date_data):
     for index, point in enumerate(combined_data[len(last_date_data) :]):
         data_point = {}
         last_four_hours = combined_data[index - 3 : index + 1]
+        data_point["date"] = point.get("obsTimeLocal")
         data_point["last_4_dewpt_avg"] = (
             sum([d.get("metric").get("dewptAvg") for d in last_four_hours]) / 4.0
         )
@@ -102,8 +103,13 @@ def main():
     current_date_data = get_history_condition(current_date.strftime(DATE_FORMAT))
     last_date_data = get_history_condition(last_date.strftime(DATE_FORMAT))
 
-    points = extract_data_points(current_date_data, last_date_data)
-    print(points)
+    points = []
+    for i in range (1,11):
+        points.extend(extract_data_points(current_date_data, last_date_data))
+        last_date = current_date
+        current_date = current_date + timedelta(days=1)
+        last_date_data = current_date_data
+        current_date_data = get_history_condition(current_date.strftime(DATE_FORMAT))
 
 
 if __name__ == "__main__":
