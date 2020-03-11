@@ -41,7 +41,7 @@ def get_current_conditions():
     current_data = json.loads(current_req.data)
 
 
-def main():
+def get_history_condition(date):
     history_url = "{url_base}{endpoint}".format(
         url_base=API_BASE_URL, endpoint=HISTORY_ENDPOINT
     )
@@ -50,13 +50,17 @@ def main():
         "format": RESPONSE_FORMAT,
         "units": UNITS,
         "apiKey": API_KEY,
-        "date": ""
+        "date": date
     }
 
     http = urllib3.PoolManager()
 
     history_req = http.request("GET", history_url, fields=query_parameters)
     history_data = json.loads(history_req.data)
+    return history_data
+
+def main():
+    history_data = get_history_condition("20200311")
 
 
 if __name__ == "__main__":
