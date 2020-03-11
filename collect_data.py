@@ -13,6 +13,8 @@ import urllib3
 import os
 import json
 from datetime import date, timedelta
+import csv
+
 
 API_BASE_URL = "https://api.weather.com"
 HISTORY_ENDPOINT = "/v2/pws/history/hourly"
@@ -97,20 +99,30 @@ def extract_data_points(current_date_data, last_date_data):
 
 
 def main():
-    current_date = date(2020, 3, 1)
+    current_date = date(2020, 2, 11)
     last_date = current_date - timedelta(days=1)
 
     current_date_data = get_history_condition(current_date.strftime(DATE_FORMAT))
     last_date_data = get_history_condition(last_date.strftime(DATE_FORMAT))
 
     points = []
-    for i in range (1,11):
+    for i in range (1,21):
         points.extend(extract_data_points(current_date_data, last_date_data))
         last_date = current_date
         current_date = current_date + timedelta(days=1)
         last_date_data = current_date_data
         current_date_data = get_history_condition(current_date.strftime(DATE_FORMAT))
 
+    with open('weather.csv', 'w') as weather_file:
+        fieldnames = ["date", "last_4_dewpt_avg", "last_4_temp_avg",
+            "last_4_solar_radiation_high", "last_4_humidity_avg", "current_solar_radiation",
+            "current_humidity", "current_temp", "current_dewpt", "current_precip_rate",
+            "previous_day_percip_total"
+        ]
+        writer = csv.DictWriter(weather_file, fieldnames=fieldnames)
+        writer.writeheader()
+        for point in points:
+            writer.writerow(point)
 
 if __name__ == "__main__":
     main()
