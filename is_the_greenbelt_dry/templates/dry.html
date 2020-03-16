@@ -2,7 +2,7 @@
 <title>Is the greenbelt dry?</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<div class="container">
+<main class="container" role="main">
   <div class="row">
     <div class="col-md">
       <h1>Is the greenbelt dry?</h1>
@@ -13,4 +13,10 @@
       <div class="msg"> {{ msg }} </div>
     </div>
   </div>
-</div>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div>Have feedback or want to make this site better?</div>
+    <div>Submit an issue or PR to <a href="https://github.com/soapy1/is-the-greenbelt-dry">is-the-greenbelt-dry</a></div>
+  </div>
+</footer>
