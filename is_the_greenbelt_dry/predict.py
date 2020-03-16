@@ -10,7 +10,7 @@ API_KEY = os.environ.get("WEATHER_API_KEY")
 def predict_if_greenbelt_dry():
     ws = WeatherStation(API_KEY, SOUTH_AUSTIN_STATION_ID)
     current_conditions = ws.get_current_conditions()
-    target_date = date(2020, 3, 9)
+    target_date = date.today()
     current_weather_features = ws.get_weather_features(target_date)
 
     latest_data_point = current_weather_features[-1]
