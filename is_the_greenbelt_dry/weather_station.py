@@ -3,7 +3,7 @@ import json
 from datetime import date, timedelta
 from functools import lru_cache
 
-from constants import API_BASE_URL, HISTORY_ENDPOINT, CURRENT_ENDPONT
+from is_the_greenbelt_dry.constants import API_BASE_URL, HISTORY_ENDPOINT, CURRENT_ENDPONT
 
 
 class WeatherStation:

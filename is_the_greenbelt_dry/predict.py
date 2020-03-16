@@ -1,7 +1,7 @@
 import os
 from datetime import date
-from weather_station import WeatherStation
-from constants import SOUTH_AUSTIN_STATION_ID
+from is_the_greenbelt_dry.weather_station import WeatherStation
+from is_the_greenbelt_dry.constants import SOUTH_AUSTIN_STATION_ID
 
 
 API_KEY = os.environ.get("WEATHER_API_KEY")
