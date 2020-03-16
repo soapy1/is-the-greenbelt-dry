@@ -9,11 +9,10 @@ API_KEY = os.environ.get("WEATHER_API_KEY")
 
 def predict_if_greenbelt_dry():
     ws = WeatherStation(API_KEY, SOUTH_AUSTIN_STATION_ID)
-    current_conditions = ws.get_current_conditions()
     target_date = date.today()
     current_weather_features = ws.get_weather_features(target_date)
-
     latest_data_point = current_weather_features[-1]
+
     # It's currently raining
     if latest_data_point.get("current_precip_rate") > 0:
         msg = "currently raining, greenbelt is wet af"
@@ -26,8 +25,12 @@ def predict_if_greenbelt_dry():
             greenbelt_dry = True
         # It did rain yesterday
         else:
+            # It hasn't rained for the past 12 hours
+            if set(w.get("current_precip_rate") for w in current_weather_features[12:]) == {0.0}:
+                msg = "it rained more than 12 hours ago, the greenbelt is probably dry enough"
+                greenbelt_dry = True
             # High temp + high solar radiation means the rock will dry well
-            if (
+            elif (
                 latest_data_point.get("last_4_dewpt_avg")
                 < latest_data_point.get("last_4_temp_avg")
             ) and (latest_data_point.get("last_4_solar_radiation_high") > 400):

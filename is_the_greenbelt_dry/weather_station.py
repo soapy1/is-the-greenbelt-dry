@@ -59,7 +59,7 @@ class WeatherStation:
             [d.get("metric").get("precipTotal") for d in last_date_data]
         )
         combined_data = last_date_data + current_date_data
-        for index, point in enumerate(combined_data[len(last_date_data) :]):
+        for index, point in enumerate(combined_data[len(combined_data)-24 :]):
             data_point = {}
             last_four_hours = combined_data[index - 3 : index + 1]
             data_point["date"] = point.get("obsTimeLocal")
