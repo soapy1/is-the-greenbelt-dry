@@ -1,6 +1,7 @@
 import urllib3
 import json
 from datetime import date, timedelta
+from functools import lru_cache
 
 from constants import API_BASE_URL, HISTORY_ENDPOINT, CURRENT_ENDPONT
 
@@ -12,7 +13,6 @@ class WeatherStation():
         self.response_format = response_format
         self.units = units
         self.date_format = date_format
-
 
     def get_current_conditions(self):
         current_url = "{url_base}{endpoint}".format(
@@ -29,7 +29,7 @@ class WeatherStation():
         current_data = json.loads(current_req.data)
         return current_data.get("observations")
 
-
+    @lru_cache
     def get_history_condition(self, date):
         history_url = "{url_base}{endpoint}".format(
             url_base=API_BASE_URL, endpoint=HISTORY_ENDPOINT
@@ -77,6 +77,7 @@ class WeatherStation():
             data_points.append(data_point)
         return data_points
 
+    @lru_cache
     def get_weather_features(self, target_date):
         last_date = target_date - timedelta(days=1)
 
