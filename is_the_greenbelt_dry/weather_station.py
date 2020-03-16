@@ -6,8 +6,15 @@ from functools import lru_cache
 from constants import API_BASE_URL, HISTORY_ENDPOINT, CURRENT_ENDPONT
 
 
-class WeatherStation():
-    def __init__(self, api_key, station_id, response_format="json", units="m", date_format="%Y%m%d"):
+class WeatherStation:
+    def __init__(
+        self,
+        api_key,
+        station_id,
+        response_format="json",
+        units="m",
+        date_format="%Y%m%d",
+    ):
         self.api_key = api_key
         self.station_id = station_id
         self.response_format = response_format
@@ -81,6 +88,10 @@ class WeatherStation():
     def get_weather_features(self, target_date):
         last_date = target_date - timedelta(days=1)
 
-        target_date_data = self.get_history_condition(target_date.strftime(self.date_format))
-        last_date_data = self.get_history_condition(last_date.strftime(self.date_format))
+        target_date_data = self.get_history_condition(
+            target_date.strftime(self.date_format)
+        )
+        last_date_data = self.get_history_condition(
+            last_date.strftime(self.date_format)
+        )
         return self.extract_data_points(target_date_data, last_date_data)

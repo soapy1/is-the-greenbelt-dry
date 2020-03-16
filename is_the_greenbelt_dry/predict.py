@@ -27,12 +27,18 @@ def main():
         # It did rain yesterday
         else:
             # High temp + high solar radiation means the rock will dry well
-            if (latest_data_point.get("last_4_dewpt_avg") < latest_data_point.get("last_4_temp_avg")) and (latest_data_point.get("last_4_solar_radiation_high") > 400):
-                print("it recently rained, but there is a change that the greenbelt is dry enough")
+            if (
+                latest_data_point.get("last_4_dewpt_avg")
+                < latest_data_point.get("last_4_temp_avg")
+            ) and (latest_data_point.get("last_4_solar_radiation_high") > 400):
+                print(
+                    "it recently rained, but there is a change that the greenbelt is dry enough"
+                )
             else:
-                print("it recently rained and hasn't been very sunny, the greenbelt is probably wet")
+                print(
+                    "it recently rained and hasn't been very sunny, the greenbelt is probably wet"
+                )
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
