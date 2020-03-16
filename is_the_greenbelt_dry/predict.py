@@ -16,7 +16,7 @@ def predict_if_greenbelt_dry():
     latest_data_point = current_weather_features[-1]
     # It's currently raining
     if latest_data_point.get("current_precip_rate") > 0:
-        msg = "currently raining, greenbelt is moist af"
+        msg = "currently raining, greenbelt is wet af"
         greenbelt_dry = False
     # It's currently not raining
     else:
@@ -34,6 +34,6 @@ def predict_if_greenbelt_dry():
                 msg =  "it recently rained, but there is a chance that the greenbelt is dry enough"
                 greenbelt_dry = True
             else:
-                msg = "it recently rained and hasn't been very sunny, the greenbelt is probably wet"
+                msg = "it recently rained and hasn't been very sunny, the greenbelt is probably moist"
                 greenbelt_dry = False
     return msg, greenbelt_dry
