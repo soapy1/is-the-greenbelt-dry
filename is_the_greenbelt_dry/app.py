@@ -5,5 +5,5 @@ app = Flask(__name__)
 
 @app.route('/')
 def is_the_greenbelt_dry():
-    predict_if_greenbelt_dry()
-    return 'Hello, World!'
+    msg, greenbelt_dry = predict_if_greenbelt_dry()
+    return msg
