@@ -1,16 +1,14 @@
 import os
 from datetime import date
 from weather_station import WeatherStation
+from constants import SOUTH_AUSTIN_STATION_ID
 
 
 API_KEY = os.environ.get("WEATHER_API_KEY")
-# Station for Bouldin - South Austin
-# https://www.wunderground.com/dashboard/pws/KTXAUSTI90
-STATION_ID = "KTXAUSTI90"
 
 
-def main():
-    ws = WeatherStation(API_KEY, STATION_ID)
+def predict_if_greenbelt_dry():
+    ws = WeatherStation(API_KEY, SOUTH_AUSTIN_STATION_ID)
     current_conditions = ws.get_current_conditions()
     target_date = date(2020, 3, 9)
     current_weather_features = ws.get_weather_features(target_date)
@@ -38,7 +36,3 @@ def main():
                 print(
                     "it recently rained and hasn't been very sunny, the greenbelt is probably wet"
                 )
-
-
-if __name__ == "__main__":
-    main()
