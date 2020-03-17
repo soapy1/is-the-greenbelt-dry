@@ -1,5 +1,6 @@
 import os
-from datetime import date
+from datetime import date, datetime
+import pytz
 from is_the_greenbelt_dry.weather_station import WeatherStation
 from is_the_greenbelt_dry.constants import SOUTH_AUSTIN_STATION_ID
 
@@ -9,7 +10,8 @@ API_KEY = os.environ.get("WEATHER_API_KEY")
 
 def predict_if_greenbelt_dry():
     ws = WeatherStation(API_KEY, SOUTH_AUSTIN_STATION_ID)
-    target_date = date.today()
+    tz = pytz.timezone('America/Chicago')
+    target_date = datetime.now(tz).date()
     current_weather_features = ws.get_weather_features(target_date)
     latest_data_point = current_weather_features[-1]
 
