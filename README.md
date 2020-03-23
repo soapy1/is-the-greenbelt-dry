@@ -7,6 +7,7 @@ The Greenbelt is a park in Austin, TX. One of the more fun things you can do the
 1. Set environment variable `WEATHER_API_KEY` to the api key for https://www.wunderground.com/
 1. Install all the deps listed in `requirements.txt`
 1. Run the app using gunicorn
+
 ```
 $  gunicorn is_the_greenbelt_dry.app:app --log-file -
 ```
