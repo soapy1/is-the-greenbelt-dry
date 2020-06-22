@@ -1,5 +1,5 @@
 #
-# API endpoint ex: https://api.weather.com/v2/pws/history/hourly?stationId=KTXAUSTI90&format=json&units=m&apiKey=7bc0df6cb93347e680df6cb933b7e67d&date=20200311
+# API endpoint ex: https://api.weather.com/v2/pws/history/hourly?stationId=KTXAUSTI90&format=json&units=m&apiKey=qwer1234asdf&date=20200311
 #
 # Initial varaibles:
 #   current:
