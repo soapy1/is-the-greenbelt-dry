@@ -118,7 +118,7 @@ class WeatherStation:
         # extract desired data from last three days
         last_three_days = [
             {
-            "obsTimeLocal": i['obsTimeLocal'],
+            "obsTimeLocal": i['obsTimeLocal'].split(" ")[0],
             "solarRadiation": i["solarRadiationHigh"],
             "tempHigh": i[self.units_key]["tempHigh"],
             "precipTotal": i[self.units_key]["precipTotal"]
