@@ -1,9 +1,11 @@
 import urllib3
 import json
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 from functools import lru_cache
+import pytz
 
-from is_the_greenbelt_dry.constants import API_BASE_URL, HISTORY_ENDPOINT, CURRENT_ENDPONT
+from is_the_greenbelt_dry.constants import (
+    API_BASE_URL, HISTORY_ENDPOINT, CURRENT_ENDPONT, SEVEN_DAY_SUMMARY_ENDPOINT)
 
 
 class WeatherStation:
@@ -96,3 +98,31 @@ class WeatherStation:
             last_date.strftime(self.date_format)
         )
         return self.extract_data_points(target_date_data, last_date_data)
+
+    @lru_cache
+    def last_three_days(self):
+        summary_url = "{url_base}{endpoint}".format(
+            url_base=API_BASE_URL, endpoint=SEVEN_DAY_SUMMARY_ENDPOINT
+        )
+        query_parameters = {
+            "stationId": self.station_id,
+            "format": self.response_format,
+            "units": self.units,
+            "apiKey": self.api_key,
+        }
+        http = urllib3.PoolManager()
+        summary_req = http.request("GET", summary_url, fields=query_parameters)
+        summary_data = json.loads(summary_req.data)
+        daily_data = summary_data.get("summaries")
+
+        # extract desired data from last three days
+        last_three_days = [
+            {
+            "obsTimeLocal": i['obsTimeLocal'],
+            "solarRadiation": i["solarRadiationHigh"],
+            "tempHigh": i[self.units_key]["tempHigh"],
+            "precipTotal": i[self.units_key]["precipTotal"]
+            } 
+        for i in daily_data[-3:]]
+
+        return last_three_days
