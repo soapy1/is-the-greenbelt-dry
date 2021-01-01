@@ -15,10 +15,16 @@ def predict_if_greenbelt_dry():
     current_weather_features = ws.get_weather_features(target_date)
     latest_data_point = current_weather_features[-1]
 
+    current_day_rain = sum([i['current_precip_rate'] for i in current_weather_features])
     # It's currently raining
-    if latest_data_point.get("current_precip_rate") > 0:
-        msg = "currently raining, greenbelt is wet af"
-        greenbelt_dry = False
+    if current_day_rain > 0.0:
+        # It's currently raining
+        if latest_data_point.get("current_precip_rate") > 0:
+            msg = "currently raining, greenbelt is wet af"
+            greenbelt_dry = False
+        else:
+            msg = "so far today it has rained %s mm, it's probably wet" % current_day_rain
+            greenbelt_dry = False
     # It's currently not raining
     else:
         # It didn't rain yesterday
