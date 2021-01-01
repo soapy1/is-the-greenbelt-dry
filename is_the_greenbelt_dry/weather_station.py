@@ -12,7 +12,7 @@ class WeatherStation:
         api_key,
         station_id,
         response_format="json",
-        units="m",
+        units="e", 
         date_format="%Y%m%d",
     ):
         self.api_key = api_key
@@ -20,6 +20,7 @@ class WeatherStation:
         self.response_format = response_format
         self.units = units
         self.date_format = date_format
+        self.units_key = "imperial" if units == "e" else "metric"
 
     def get_current_conditions(self):
         current_url = "{url_base}{endpoint}".format(
@@ -56,7 +57,7 @@ class WeatherStation:
     def extract_data_points(self, current_date_data, last_date_data):
         data_points = []
         previous_day_percip_total = sum(
-            [d.get("metric").get("precipTotal") for d in last_date_data]
+            [d.get(self.units_key).get("precipTotal") for d in last_date_data]
         )
         combined_data = last_date_data + current_date_data
         for index, point in enumerate(combined_data[len(combined_data)-24 :]):
@@ -64,10 +65,10 @@ class WeatherStation:
             last_four_hours = combined_data[index - 3 : index + 1]
             data_point["date"] = point.get("obsTimeLocal")
             data_point["last_4_dewpt_avg"] = (
-                sum([d.get("metric").get("dewptAvg") for d in last_four_hours]) / 4.0
+                sum([d.get(self.units_key).get("dewptAvg") for d in last_four_hours]) / 4.0
             )
             data_point["last_4_temp_avg"] = (
-                sum([d.get("metric").get("tempAvg") for d in last_four_hours]) / 4.0
+                sum([d.get(self.units_key).get("tempAvg") for d in last_four_hours]) / 4.0
             )
             data_point["last_4_solar_radiation_high"] = (
                 sum([d.get("solarRadiationHigh") for d in last_four_hours]) / 4.0
@@ -77,9 +78,9 @@ class WeatherStation:
             )
             data_point["current_solar_radiation"] = point.get("solarRadiationHigh")
             data_point["current_humidity"] = point.get("humidityAvg")
-            data_point["current_temp"] = point.get("metric").get("tempAvg")
-            data_point["current_dewpt"] = point.get("metric").get("dewptAvg")
-            data_point["current_precip_rate"] = point.get("metric").get("precipRate")
+            data_point["current_temp"] = point.get(self.units_key).get("tempAvg")
+            data_point["current_dewpt"] = point.get(self.units_key).get("dewptAvg")
+            data_point["current_precip_rate"] = point.get(self.units_key).get("precipRate")
             data_point["previous_day_percip_total"] = previous_day_percip_total
             data_points.append(data_point)
         return data_points

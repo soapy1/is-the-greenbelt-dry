@@ -23,7 +23,7 @@ def predict_if_greenbelt_dry():
             msg = "currently raining, greenbelt is wet af"
             greenbelt_dry = False
         else:
-            msg = "so far today it has rained %s mm, it's probably wet" % current_day_rain
+            msg = "so far today it has rained %s inches, it's probably wet" % str(round(current_day_rain, 2))
             greenbelt_dry = False
     # It's currently not raining
     else:
