@@ -10,12 +10,12 @@ API_KEY = os.environ.get("WEATHER_API_KEY")
 
 def predict_if_greenbelt_dry():
     ws = WeatherStation(API_KEY, SOUTH_AUSTIN_STATION_ID)
-    tz = pytz.timezone('America/Chicago')
+    tz = pytz.timezone("America/Chicago")
     target_date = datetime.now(tz).date()
     current_weather_features = ws.get_weather_features(target_date)
     latest_data_point = current_weather_features[-1]
 
-    current_day_rain = sum([i['current_precip_rate'] for i in current_weather_features])
+    current_day_rain = sum([i["current_precip_rate"] for i in current_weather_features])
     # It's currently raining
     if current_day_rain > 0.0:
         # It's currently raining
@@ -23,7 +23,9 @@ def predict_if_greenbelt_dry():
             msg = "currently raining, greenbelt is wet af"
             greenbelt_dry = False
         else:
-            msg = "so far today it has rained %s mm, it's probably wet" % current_day_rain
+            msg = "so far today it has rained %s inches, it's probably wet" % str(
+                round(current_day_rain, 2)
+            )
             greenbelt_dry = False
     # It's currently not raining
     else:
@@ -34,7 +36,9 @@ def predict_if_greenbelt_dry():
         # It did rain yesterday
         else:
             # It hasn't rained for the past 12 hours
-            if set(w.get("current_precip_rate") for w in current_weather_features[12:]) == {0.0}:
+            if set(
+                w.get("current_precip_rate") for w in current_weather_features[12:]
+            ) == {0.0}:
                 msg = "it rained more than 12 hours ago, the greenbelt is probably dry enough"
                 greenbelt_dry = True
             # High temp + high solar radiation means the rock will dry well
@@ -42,7 +46,7 @@ def predict_if_greenbelt_dry():
                 latest_data_point.get("last_4_dewpt_avg")
                 < latest_data_point.get("last_4_temp_avg")
             ) and (latest_data_point.get("last_4_solar_radiation_high") > 400):
-                msg =  "it recently rained, but there is a chance that the greenbelt is dry enough"
+                msg = "it recently rained, but there is a chance that the greenbelt is dry enough"
                 greenbelt_dry = True
             else:
                 msg = "it recently rained and hasn't been very sunny, the greenbelt is probably moist"

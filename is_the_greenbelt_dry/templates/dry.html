@@ -8,7 +8,7 @@
       <h1>Is the greenbelt dry enough to climb?</h1>
     </div>
   </div>
-  <div class="row">
+  <div class="row pt-5">
     <div class="col-md">
       {% if greenbelt_dry %}
         <h2>probably</h2>
@@ -18,8 +18,44 @@
       <div class="msg"> {{ msg }} </div>
     </div>
   </div>
-  <br><br>
-  <div class="row">
+
+  <div class="row pt-5">
+    <div class="col-md">
+      <h3>Past 3 day weather</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th scope="col">{{ weather_summary[0].get("obsTimeLocal") }}</th>
+            <th scope="col">{{ weather_summary[1].get("obsTimeLocal") }}</th>
+            <th scope="col">{{ weather_summary[2].get("obsTimeLocal") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Temperature high (F)</th>
+            <td>{{ weather_summary[0].get("tempHigh") }}</td>
+            <td>{{ weather_summary[1].get("tempHigh") }}</td>
+            <td>{{ weather_summary[2].get("tempHigh") }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Total precipitation (inches)</th>
+            <td>{{ weather_summary[0].get("precipTotal") }}</td>
+            <td>{{ weather_summary[1].get("precipTotal") }}</td>
+            <td>{{ weather_summary[2].get("precipTotal") }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Solar radiation high</th>
+            <td>{{ weather_summary[0].get("solarRadiation") }}</td>
+            <td>{{ weather_summary[1].get("solarRadiation") }}</td>
+            <td>{{ weather_summary[2].get("solarRadiation") }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div class="row pt-5">
     <div class="col-md">
 	    Be careful out there! Check out <a href=https://www.accessfund.org/open-gate-blog/climbing-during-the-coronavirus-pandemic>Access Fund's</a> guidelines for pandemic climbing.
     </div>
