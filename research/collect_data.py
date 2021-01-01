@@ -106,23 +106,32 @@ def main():
     last_date_data = get_history_condition(last_date.strftime(DATE_FORMAT))
 
     points = []
-    for i in range (1,21):
+    for i in range(1, 21):
         points.extend(extract_data_points(current_date_data, last_date_data))
         last_date = current_date
         current_date = current_date + timedelta(days=1)
         last_date_data = current_date_data
         current_date_data = get_history_condition(current_date.strftime(DATE_FORMAT))
 
-    with open('weather.csv', 'w') as weather_file:
-        fieldnames = ["date", "last_4_dewpt_avg", "last_4_temp_avg",
-            "last_4_solar_radiation_high", "last_4_humidity_avg", "current_solar_radiation",
-            "current_humidity", "current_temp", "current_dewpt", "current_precip_rate",
-            "previous_day_percip_total"
+    with open("weather.csv", "w") as weather_file:
+        fieldnames = [
+            "date",
+            "last_4_dewpt_avg",
+            "last_4_temp_avg",
+            "last_4_solar_radiation_high",
+            "last_4_humidity_avg",
+            "current_solar_radiation",
+            "current_humidity",
+            "current_temp",
+            "current_dewpt",
+            "current_precip_rate",
+            "previous_day_percip_total",
         ]
         writer = csv.DictWriter(weather_file, fieldnames=fieldnames)
         writer.writeheader()
         for point in points:
             writer.writerow(point)
+
 
 if __name__ == "__main__":
     main()

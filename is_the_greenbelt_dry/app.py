@@ -8,14 +8,15 @@ app = Flask(__name__)
 
 API_KEY = os.environ.get("WEATHER_API_KEY")
 
-@app.route('/')
+
+@app.route("/")
 def is_the_greenbelt_dry():
     msg, greenbelt_dry = predict_if_greenbelt_dry()
     ws = WeatherStation(API_KEY, SOUTH_AUSTIN_STATION_ID)
     weather_summary = ws.last_three_days()
     return render_template(
-        'dry.html', 
-        msg=msg, 
-        greenbelt_dry=greenbelt_dry, 
-        weather_summary=weather_summary
+        "dry.html",
+        msg=msg,
+        greenbelt_dry=greenbelt_dry,
+        weather_summary=weather_summary,
     )
