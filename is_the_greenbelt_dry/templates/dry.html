@@ -10,20 +10,18 @@
   </div>
   <div class="row">
     <div class="col-md">
+      {% if greenbelt_dry %}
+        <h2>probably</h2>
+      {% else %}
+       <h2>probably not</h2>
+      {% endif %}
       <div class="msg"> {{ msg }} </div>
     </div>
   </div>
   <br><br>
   <div class="row">
     <div class="col-md">
-      Want to know if you can swim at the greenbelt?
-      Check this out <a href=http://www.greenbeltnow.com/>greenbeltnow.com</a>
-    </div>
-  </div>
-  <br><br>
-  <div class="row">
-    <div class="col-md">
-	    <h1>Be careful out there! Check out <a href=https://www.accessfund.org/open-gate-blog/climbing-during-the-coronavirus-pandemic>Access Fund's</a> guidelines for pandemic climbing.</h1>
+	    Be careful out there! Check out <a href=https://www.accessfund.org/open-gate-blog/climbing-during-the-coronavirus-pandemic>Access Fund's</a> guidelines for pandemic climbing.
     </div>
   </div>
 </main>
